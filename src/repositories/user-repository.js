@@ -27,7 +27,7 @@ exports.getLastAccountNumber = async(id) => {
     const res = await User
         .findOne({}, {}, { sort: { 'accountNumber' : -1 } });
     if (res === null)
-        return null;
+        return 0;
     return res.accountNumber;
 }
 

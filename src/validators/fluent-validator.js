@@ -25,7 +25,8 @@ ValidationContract.prototype.isFixedLen = (value, len, message) => {
 }
 
 ValidationContract.prototype.isCpfOrCnpj = (value, message) => {
-    if (value.length !== 11 || value.length !== 14)
+    console.log(value.length);
+    if (value.length !== 11 && value.length !== 14)
         errors.push({ message: message });
 }
 

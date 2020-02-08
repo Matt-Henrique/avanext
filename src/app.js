@@ -14,6 +14,7 @@ const User = require('./models/user');
 const Transaction = require('./models/transaction');
 
 // Carrega as Rotas
+const indexRoute = require('./routes/index-route');
 const userRoute = require('./routes/user-route');
 
 app.use(bodyParser.json());
@@ -29,6 +30,7 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use('/', indexRoute);
 app.use('/users', userRoute);
 
 module.exports = app;

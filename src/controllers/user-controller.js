@@ -40,7 +40,7 @@ exports.post = async(req, res, next) => {
     let contract = new validationContract();
 
     contract.hasMinLen(req.body.name, 5, 'O nome deve conter pelo menos 5 caracteres');
-    contract.isCpfOrCnpj(req.body.cpf_cnpj, 11, 'O documento está inválido');
+    contract.isCpfOrCnpj(req.body.cpf_cnpj, 'O documento está inválido');
     contract.isEmail(req.body.email, 'O e-mail está inválido');
     contract.hasMinLen(req.body.password, 6, 'A senha deve conter pelo menos 6 caracteres');
 
@@ -49,8 +49,8 @@ exports.post = async(req, res, next) => {
         return;
     }
 
-    const accountNumber = repository.getLastAccountNumber();
-    console.log(accountNumber);
+    let accountNumber = await repository.getLastAccountNumber();
+    accountNumber = (Number(accountNumber) + 1).toString().padStart(8, "0")
 
     try {
         await repository.create({
@@ -63,12 +63,12 @@ exports.post = async(req, res, next) => {
             active: true
         });
         res.status(201).send({
-            message: 'Produto cadastrado com sucesso!'
+            message: 'Usuário cadastrado com sucesso!'
         });
     } catch (e) {
         console.log(e);
         res.status(500).send({
-            message: 'Falha ao processar sua requisição'
+            message: 'Erro ao cadastrar usuário'
         });
     }
 };
