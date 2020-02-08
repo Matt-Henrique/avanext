@@ -13,7 +13,7 @@ exports.getByAccountNumber = async(accountNumber) => {
         .findOne({
             accountNumber: accountNumber,
             active: true
-        }, 'name cpf_cnpj accountNumber bankBalance email');
+        }, '_id name cpf_cnpj accountNumber bankBalance email');
     return res;
 }
 
