@@ -1,5 +1,3 @@
-'use strict';
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -12,11 +10,17 @@ const schema = new Schema({
         type: Number,
         required: true
     },
+    bankCode: {
+        type: String,
+        required: true
+    },
     bankName: {
-        type: String
+        type: String,
+        required: true
     },
     agency: {
-        type: Number
+        type: Number,
+        required: true
     },
     accountNumber: {
         type: Number,
