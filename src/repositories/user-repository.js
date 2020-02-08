@@ -23,6 +23,12 @@ exports.getById = async(id) => {
     return res;
 }
 
+exports.getLastAccountNumber = async(id) => {
+    const res = await User
+        .findOne({}, {}, { sort: { 'accountNumber' : -1 } });
+    return res?.accountNumber;
+}
+
 exports.create = async(data) => {
     var user = new User(data);
     await user.save();

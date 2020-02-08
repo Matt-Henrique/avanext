@@ -49,7 +49,8 @@ exports.post = async(req, res, next) => {
         return;
     }
 
-    const accountNumber = 0;
+    const accountNumber = repository.getLastAccountNumber();
+    console.log(accountNumber);
 
     try {
         await repository.create({
