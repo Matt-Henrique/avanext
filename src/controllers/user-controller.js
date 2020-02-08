@@ -1,5 +1,6 @@
 const validationContract = require('../validators/fluent-validator');
 const repository = require('../repositories/user-repository');
+const authService = require('../services/auth-service');
 const md5 = require('md5');
 
 exports.get = async(req, res, next) => {
@@ -69,6 +70,44 @@ exports.post = async(req, res, next) => {
         console.log(e);
         res.status(500).send({
             message: 'Erro ao cadastrar usuário'
+        });
+    }
+};
+
+exports.authenticate = async(req, res, next) => {
+    try {
+        const user = await repository.authenticate({
+            email: req.body.email,
+            password: md5(req.body.password + global.SALT_KEY)
+        });
+
+        console.log(user);
+
+        if (!user) {
+            res.status(404).send({
+                message: 'Usuário ou senha inválidos'
+            });
+            return;
+        }
+
+        const token = await authService.generateToken({
+            id: user._id,
+            email: user.email,
+            name: user.name
+        });
+
+        console.log(token);
+
+        res.status(201).send({
+            token: token,
+            data: {
+                email: user.email,
+                name: user.name
+            }
+        });
+    } catch (e) {
+        res.status(500).send({
+            message: 'Erro ao autenticar o usuário'
         });
     }
 };
