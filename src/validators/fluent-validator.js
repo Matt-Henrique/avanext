@@ -24,12 +24,6 @@ ValidationContract.prototype.isFixedLen = (value, len, message) => {
         errors.push({ message: message });
 }
 
-ValidationContract.prototype.isCpfOrCnpj = (value, message) => {
-    console.log(value.length);
-    if (value.length !== 11 && value.length !== 14)
-        errors.push({ message: message });
-}
-
 ValidationContract.prototype.isEmail = (value, message) => {
     var reg = new RegExp(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/);
     if (!reg.test(value))

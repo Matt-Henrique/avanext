@@ -43,7 +43,7 @@ exports.post = async(req, res, next) => {
             agency: req.body.agency,
             accountNumber: req.body.accountNumber,
             userName: req.body.userName,
-            cpf_cnpj: req.body.cpf_cnpj,
+            cpf: req.body.cpf,
             // user: req.body.user
         });
         res.status(201).send({

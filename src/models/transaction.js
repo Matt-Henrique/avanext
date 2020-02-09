@@ -36,7 +36,7 @@ const schema = new Schema({
     userName: {
         type: String
     },
-    cpf_cnpj: {
+    cpf: {
         type: String
     },
     user: {

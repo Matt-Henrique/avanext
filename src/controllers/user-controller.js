@@ -1,5 +1,5 @@
 const validationContract = require('../validators/fluent-validator');
-const repository = require('../repositories/transaction-repository');
+const repository = require('../repositories/user-repository');
 const authService = require('../services/auth-service');
 const md5 = require('md5');
 
@@ -41,7 +41,7 @@ exports.post = async(req, res, next) => {
     let contract = new validationContract();
 
     contract.hasMinLen(req.body.name, 5, 'O nome deve conter pelo menos 5 caracteres');
-    contract.isCpfOrCnpj(req.body.cpf_cnpj, 'O documento está inválido');
+    contract.isFixedLen(req.body.cpf, 11, 'O CPF deve conter 11 caracteres');
     contract.isEmail(req.body.email, 'O e-mail está inválido');
     contract.hasMinLen(req.body.password, 6, 'A senha deve conter pelo menos 6 caracteres');
 
@@ -51,12 +51,12 @@ exports.post = async(req, res, next) => {
     }
 
     let accountNumber = await repository.getLastAccountNumber();
-    accountNumber = (Number(accountNumber) + 1).toString().padStart(8, "0")
+    accountNumber = (Number(accountNumber) + 1).toString().padStart(8, "0");
 
     try {
         await repository.create({
             name: req.body.name,
-            cpf_cnpj: req.body.cpf_cnpj,
+            cpf: req.body.cpf,
             accountNumber: accountNumber,
             bankBalance: 0,
             email: req.body.email,
@@ -64,7 +64,7 @@ exports.post = async(req, res, next) => {
             active: true
         });
         res.status(201).send({
-            message: 'Usuário cadastrado com sucesso!'
+            message: 'Usuário cadastrado com sucesso'
         });
     } catch (e) {
         console.log(e);
@@ -81,8 +81,6 @@ exports.authenticate = async(req, res, next) => {
             password: md5(req.body.password + global.SALT_KEY)
         });
 
-        console.log(user);
-
         if (!user) {
             res.status(404).send({
                 message: 'Usuário ou senha inválidos'
@@ -90,13 +88,11 @@ exports.authenticate = async(req, res, next) => {
             return;
         }
 
-        const token = await authService.generateToken({
+        const token = authService.generateToken({
             id: user._id,
             email: user.email,
             name: user.name
         });
-
-        console.log(token);
 
         res.status(201).send({
             token: token,

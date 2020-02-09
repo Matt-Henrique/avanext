@@ -4,7 +4,7 @@ const User = mongoose.model('User');
 exports.get = async() => {
     const res = await User.find({
         active: true
-    }, 'name cpf_cnpj accountNumber email');
+    }, 'name cpf accountNumber email');
     return res;
 }
 
@@ -13,17 +13,17 @@ exports.getByAccountNumber = async(accountNumber) => {
         .findOne({
             accountNumber: accountNumber,
             active: true
-        }, '_id name cpf_cnpj accountNumber bankBalance email');
+        }, '_id name cpf accountNumber bankBalance email');
     return res;
 }
 
 exports.getById = async(id) => {
     const res = await User
-        .findById(id, 'name cpf_cnpj accountNumber bankBalance email active');
+        .findById(id, 'name cpf accountNumber bankBalance email active');
     return res;
 }
 
-exports.getLastAccountNumber = async(id) => {
+exports.getLastAccountNumber = async() => {
     const res = await User
         .findOne({}, {}, { sort: { 'accountNumber' : -1 } });
     if (res === null)

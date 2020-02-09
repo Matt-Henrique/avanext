@@ -6,7 +6,7 @@ const schema = new Schema({
         type: String,
         required: true
     },
-    cpf_cnpj: {
+    cpf: {
         type: String,
         required: true,
         index: true,
