@@ -89,29 +89,38 @@ exports.updateBankBalance = async(req, res, next) => {
 
 exports.authenticate = async(req, res, next) => {
     try {
-        const user = await repository.authenticate({
+        const user = await repository.getByCPF(req.body.cpf);
+
+        if (!user) {
+            res.status(404).send({
+                message: 'CPF não cadastrado'
+            });
+            return;
+        }
+
+        const userAuthenticated = await repository.authenticate({
             cpf: req.body.cpf,
             password: md5(req.body.password + global.SALT_KEY)
         });
 
-        if (!user) {
-            res.status(404).send({
+        if (!userAuthenticated) {
+            res.status(400).send({
                 message: 'Usuário ou senha inválidos'
             });
             return;
         }
 
         const token = authService.generateToken({
-            id: user._id,
-            cpf: user.cpf,
-            name: user.name
+            id: userAuthenticated._id,
+            cpf: userAuthenticated.cpf,
+            name: userAuthenticated.name
         });
 
         res.status(201).send({
             token: token,
             data: {
-                cpf: user.cpf,
-                name: user.name
+                cpf: userAuthenticated.cpf,
+                name: userAuthenticated.name
             }
         });
     } catch (e) {

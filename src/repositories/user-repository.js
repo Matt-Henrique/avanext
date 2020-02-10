@@ -17,6 +17,15 @@ exports.getByAccountNumber = async(accountNumber) => {
     return res;
 }
 
+exports.getByCPF = async(cpf) => {
+    const res = await User
+        .findOne({
+            cpf: cpf,
+            active: true
+        }, '_id name cpf accountNumber bankBalance email');
+    return res;
+}
+
 exports.getById = async(id) => {
     const res = await User
         .findById(id, 'name cpf accountNumber bankBalance email active');
