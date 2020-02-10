@@ -54,7 +54,7 @@ exports.updateActive = async(id, data) => {
 
 exports.authenticate = async(data) => {
     const res = await User.findOne({
-        email: data.email,
+        cpf: data.cpf,
         password: data.password
     });
     return res;

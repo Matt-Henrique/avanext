@@ -74,10 +74,23 @@ exports.post = async(req, res, next) => {
     }
 };
 
+exports.updateBankBalance = async(req, res, next) => {
+    try {
+        await repository.updateBankBalance(req.params.id, req.body);
+        res.status(200).send({
+            message: 'Saldo atualizado com sucesso'
+        });
+    } catch (e) {
+        res.status(500).send({
+            message: 'Erro ao atualizar saldo'
+        });
+    }
+};
+
 exports.authenticate = async(req, res, next) => {
     try {
         const user = await repository.authenticate({
-            email: req.body.email,
+            cpf: req.body.cpf,
             password: md5(req.body.password + global.SALT_KEY)
         });
 
@@ -90,14 +103,14 @@ exports.authenticate = async(req, res, next) => {
 
         const token = authService.generateToken({
             id: user._id,
-            email: user.email,
+            cpf: user.cpf,
             name: user.name
         });
 
         res.status(201).send({
             token: token,
             data: {
-                email: user.email,
+                cpf: user.cpf,
                 name: user.name
             }
         });

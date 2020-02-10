@@ -8,5 +8,6 @@ router.get('/accountNumber/:accountNumber', authService.authorize, controller.ge
 router.get('/:id', authService.authorize, controller.getById);
 router.post('/authenticate', controller.authenticate);
 router.post('/', controller.post);
+router.patch('/bankBalance/:id', authService.authorize, controller.updateBankBalance);
 
 module.exports = router;
