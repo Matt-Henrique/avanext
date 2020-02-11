@@ -86,7 +86,7 @@ exports.post = async(req, res, next) => {
 
 exports.updateBankBalance = async(req, res, next) => {
     try {
-        await repository.updateBankBalance(req.params.id, req.body);
+        await repository.updateBankBalance(req.params.id, req.body.bankBalance);
         res.status(200).send({
             message: 'Saldo atualizado com sucesso'
         });

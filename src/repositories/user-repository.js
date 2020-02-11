@@ -45,10 +45,10 @@ exports.create = async(data) => {
     await user.save();
 }
 
-exports.updateBankBalance = async(id, data) => {
+exports.updateBankBalance = async(id, bankBalance) => {
     await User.findByIdAndUpdate(id, {
         $set: {
-            bankBalance: data.bankBalance
+            bankBalance: bankBalance
         }
     });
 }
