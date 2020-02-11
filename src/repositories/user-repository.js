@@ -8,12 +8,9 @@ exports.get = async() => {
     return res;
 }
 
-exports.getByAccountNumber = async(accountNumber) => {
+exports.getById = async(id) => {
     const res = await User
-        .findOne({
-            accountNumber: accountNumber,
-            active: true
-        }, '_id name cpf accountNumber bankBalance email');
+        .findById(id, 'name cpf accountNumber bankBalance email active');
     return res;
 }
 
@@ -26,9 +23,12 @@ exports.getByCPF = async(cpf) => {
     return res;
 }
 
-exports.getById = async(id) => {
+exports.getByAccountNumber = async(accountNumber) => {
     const res = await User
-        .findById(id, 'name cpf accountNumber bankBalance email active');
+        .findOne({
+            accountNumber: accountNumber,
+            active: true
+        }, '_id name cpf accountNumber bankBalance email');
     return res;
 }
 

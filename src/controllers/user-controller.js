@@ -14,9 +14,9 @@ exports.get = async(req, res, next) => {
     }
 }
 
-exports.getByAccountNumber = async(req, res, next) => {
+exports.getById = async(req, res, next) => {
     try {
-        var data = await repository.getByAccountNumber(req.params.accountNumber);
+        var data = await repository.getById(req.params.id);
         res.status(200).send(data);
     } catch (e) {
         res.status(500).send({
@@ -25,9 +25,9 @@ exports.getByAccountNumber = async(req, res, next) => {
     }
 }
 
-exports.getById = async(req, res, next) => {
+exports.getByAccountNumber = async(req, res, next) => {
     try {
-        var data = await repository.getById(req.params.id);
+        var data = await repository.getByAccountNumber(req.params.accountNumber);
         res.status(200).send(data);
     } catch (e) {
         res.status(500).send({
@@ -47,6 +47,15 @@ exports.post = async(req, res, next) => {
 
     if (!contract.isValid()) {
         res.status(400).send(contract.errors()).end();
+        return;
+    }
+
+    const user = await repository.getByCPF(req.body.cpf);
+
+    if (user) {
+        res.status(400).send({
+            message: 'CPF já cadastrado'
+        });
         return;
     }
 
