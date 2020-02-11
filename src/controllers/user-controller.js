@@ -66,6 +66,7 @@ exports.post = async(req, res, next) => {
         await repository.create({
             name: req.body.name,
             cpf: req.body.cpf,
+            agency: 0001,
             accountNumber: accountNumber,
             bankBalance: 0,
             email: req.body.email,

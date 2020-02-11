@@ -12,6 +12,10 @@ const schema = new Schema({
         index: true,
         unique: true
     },
+    agency: {
+        type: Number,
+        required: true
+    },
     accountNumber: {
         type: String,
         required: true,
