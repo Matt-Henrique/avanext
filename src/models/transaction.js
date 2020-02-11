@@ -14,10 +14,6 @@ const schema = new Schema({
         type: String,
         required: true
     },
-    bankName: {
-        type: String,
-        required: true
-    },
     agency: {
         type: Number,
         required: true
@@ -39,7 +35,7 @@ const schema = new Schema({
     cpf: {
         type: String
     },
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }

@@ -5,6 +5,6 @@ const authService = require('../services/auth-service');
 
 router.get('/', controller.get);
 router.get('/:id', controller.getById);
-router.post('/', controller.post);
+router.post('/', controller.postTransaction);
 
 module.exports = router;
