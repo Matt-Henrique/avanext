@@ -1,18 +1,14 @@
 const validationContract = require('../validators/fluent-validator');
 const repository = require('../repositories/transaction-repository');
-const transaction = require('../models/transaction');
 const userRepository = require('../repositories/user-repository');
 
 exports.postExit = async (body) => {
 
     try {
         //Verificar se id passado é o mesmo do usuário logado
-        // verificar se transfervalue e positivo
         let userExit = await userRepository.getById(body.userId);
-        console.log(userExit.agency);
-        // verificar se agencia
         let userInput = await userRepository.getByAccountNumber(body.accountNumber);
-        // console.log(userInput);
+        console.log(userExit);
 
         if (userExit === undefined || userExit === "" || userExit === null) {
             return {
@@ -39,9 +35,12 @@ exports.postExit = async (body) => {
             cpf: body.cpf,
             userId: body.userId
         };
-        //atulaizar saldo
+        //Salva no banco
         await repository.create(transactionExit);
-        console.log(transactionExit);
+        //atualizar saldo
+        const uptadeValueExit = transactionExit.transferValue + userExit.bankBalance;
+        userRepository.updateBankBalance(transactionExit.userId, uptadeValueExit);
+        // console.log(transactionExit);
         console.log(body.bankCode);
 
         if (body.bankCode == 100) {
@@ -50,14 +49,18 @@ exports.postExit = async (body) => {
                 transactionDate: new Date().toLocaleString(),
                 transferValue: body.transferValue,
                 bankCode: 100,
-                agency: userExit.agency,
+                agency: userExit.agency, // verificar erro
                 accountNumber: userExit.accountNumber,
                 userName: userExit.name,
                 cpf: userExit.cpf,
                 userId: userInput._id.toString()
             };
-            //atulaizar saldo
+            //Salva no banco
             await repository.create(transactionInput);
+            //atualizar saldo
+            const uptadeValueInput = transactionInput.transferValue + userExit.bankBalance;
+            userRepository.updateBankBalance(transactionExit.userId, uptadeValueInput);
+
             console.log(transactionInput);
         } else {
             //TODO: Chamar API Banco Central
