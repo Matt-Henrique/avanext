@@ -24,7 +24,7 @@ exports.getById = async (req, res, next) => {
     }
 }
 
-exports.postTransaction = async (req, res, next) => {
+exports.postTransfer = async (req, res, next) => {
 
     let contract = new validationContract();
 
@@ -34,15 +34,12 @@ exports.postTransaction = async (req, res, next) => {
     contract.hasMinLen(req.body.userName, 4, 'O nome deve conter pelo menos 4 caracteres.');
     contract.hasMinLen(req.body.cpf, 11, 'O nome deve conter pelo menos 11 números.');
 
-    
-    // contract.hasMinLen(req.body.password, 6, 'A senha deve conter pelo menos 6 caracteres');
-
     if (!contract.isValid()) {
         res.status(400).send(contract.errors()).end();
         return;
     }
 
-    let result = await transactionService.postExit(req.body);
+    let result = await transactionService.transfer(req.body);
 
     if (result.success) {
         return res.status(200).send(result.message).end();

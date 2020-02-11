@@ -2,7 +2,7 @@ const validationContract = require('../validators/fluent-validator');
 const repository = require('../repositories/transaction-repository');
 const userRepository = require('../repositories/user-repository');
 
-exports.postExit = async (body) => {
+exports.transfer = async (body) => {
 
     try {
         let userExit = await userRepository.getById(body.userId);
