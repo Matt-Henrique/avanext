@@ -129,6 +129,7 @@ exports.authenticate = async(req, res, next) => {
         res.status(201).send({
             token: token,
             data: {
+                id: userAuthenticated._id,
                 cpf: userAuthenticated.cpf,
                 name: userAuthenticated.name
             }
