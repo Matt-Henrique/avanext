@@ -5,16 +5,21 @@ const userRepository = require('../repositories/user-repository');
 exports.postExit = async (body) => {
 
     try {
-        //Verificar se id passado é o mesmo do usuário logado
         let userExit = await userRepository.getById(body.userId);
-        let userInput = await userRepository.getByAccountNumber(body.accountNumber);
-
+        
         if (userExit === undefined || userExit === "" || userExit === null) {
             return {
                 success: false,
                 message: 'Usuário não encontrato!'
             };
+        } else if (userExit.accountNumber === body.accountNumber) {
+            return {
+                success: false,
+                message: 'Conta inválida!'
+            };
         }
+        
+        let userInput = await userRepository.getByAccountNumber(body.accountNumber);
 
         if (userExit.bankBalance == null || userExit.bankBalance < body.transferValue) {
             return {
