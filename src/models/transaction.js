@@ -15,11 +15,11 @@ const schema = new Schema({
         required: true
     },
     agency: {
-        type: Number,
-        required: true
+        type: String,
+        required: false
     },
     accountNumber: {
-        type: Number,
+        type: String,
         required: true
     },
     // 0 = Conta Corrente

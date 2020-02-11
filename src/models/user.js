@@ -13,7 +13,7 @@ const schema = new Schema({
         unique: true
     },
     agency: {
-        type: Number,
+        type: String,
         required: true
     },
     accountNumber: {

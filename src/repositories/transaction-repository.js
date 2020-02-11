@@ -1,20 +1,18 @@
 const mongoose = require('mongoose');
-const transaction = mongoose.model('Transaction');
+const transactionDb = mongoose.model('Transaction');
 
 exports.get = async() => {
-    const res = await transaction.find({
-        active: true
-    }, 'transactionDate transferValue bankName agency accountNumber accountType userName cpf user');
+    const res = await transactionDb.find();
     return res;
 }
 
 exports.getById = async(id) => {
-    const res = await transaction
-        .findById(id, 'transactionDate transferValue bankName agency accountNumber accountType userName cpf user');
+    const res = await transactionDb
+        .findById(id);
     return res;
 }
 
 exports.create = async(data) => {
-    var transaction = new Transaction(data);
+    const transaction = new transactionDb(data);
     await transaction.save();
 }

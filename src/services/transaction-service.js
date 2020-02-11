@@ -3,41 +3,16 @@ const repository = require('../repositories/transaction-repository');
 const transaction = require('../models/transaction');
 const userRepository = require('../repositories/user-repository');
 
-//verrificar se id do token é mesmo do id da transferência
-// if (req.body.bankCode == '100') {
-
-//     try {
-//         await transactionService.postExit(req.body, ret);
-//         await transactionService.postInput(req.body, ret);
-//         res.status(200).send({ message: 'Transferência realizada!' })
-//     } catch (error) {
-//         res.status(500).send({
-//             message: 'Erro na Transferência!1'
-//         });
-//     }
-
-
-// } else {
-
-//     try {
-//         //chamada fake da api
-//         await transactionService.postExit(req.body);
-//         res.status(200).send({ message: 'Transferência realizada!' })
-//     } catch (error) {
-//         res.status(500).send({
-//             message: 'Erro na Transferência!2'
-//         });
-//     }
-// }
-
 exports.postExit = async (body) => {
 
     try {
         //Verificar se id passado é o mesmo do usuário logado
         // verificar se transfervalue e positivo
         let userExit = await userRepository.getById(body.userId);
+        console.log(userExit.agency);
         // verificar se agencia
         let userInput = await userRepository.getByAccountNumber(body.accountNumber);
+        // console.log(userInput);
 
         if (userExit === undefined || userExit === "" || userExit === null) {
             return {
@@ -64,23 +39,33 @@ exports.postExit = async (body) => {
             cpf: body.cpf,
             userId: body.userId
         };
+        //atulaizar saldo
+        await repository.create(transactionExit);
+        console.log(transactionExit);
+        console.log(body.bankCode);
 
-        const transactionInput = {
-            transactionDate: new Date().toLocaleString(),
-            transferValue: body.transferValue,
-            bankCode: 100,
-            agency: userExit.agency,
-            accountNumber: userExit.accountNumber,
-            name: userExit.name,
-            cpf: userExit.cpf
-        };
+        if (body.bankCode == 100) {
 
-        // await repository.create(transactionExit);
-        // await repository.create(transactionInput);
+            const transactionInput = {
+                transactionDate: new Date().toLocaleString(),
+                transferValue: body.transferValue,
+                bankCode: 100,
+                agency: userExit.agency,
+                accountNumber: userExit.accountNumber,
+                userName: userExit.name,
+                cpf: userExit.cpf,
+                userId: userInput._id.toString()
+            };
+            //atulaizar saldo
+            await repository.create(transactionInput);
+            console.log(transactionInput);
+        } else {
+            //TODO: Chamar API Banco Central
+        }
 
         return {
             success: true,
-            message: transactionInput
+            message: "Transferência realizada!"
         };
 
 
@@ -91,27 +76,3 @@ exports.postExit = async (body) => {
         };
     }
 }
-
-// exports.postInput = async (body) => {
-
-//     try {
-//         await repository.create({
-//             transactionDate: body.transactionDate,
-//             transferValue: body.transferValue,
-//             bankCode: body.bankCode,
-//             bankName: body.bankName,
-//             agency: body.agency,
-//             accountNumber: body.accountNumber,
-//             userName: body.userName,
-//             cpf_cnpj: body.cpf_cnpj,
-//             // user: req.body.user
-//         });
-//         ret.status(201).send({
-//             message: 'Transação realizada!'
-//         });
-//     } catch (e) {
-//         ret.status(500).send({
-//             message: 'Erro na transação!4'
-//         });
-//     }
-// }
