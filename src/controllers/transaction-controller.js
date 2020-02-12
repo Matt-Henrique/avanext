@@ -24,6 +24,17 @@ exports.getById = async (req, res, next) => {
     }
 }
 
+exports.getBankStatement = async (req, res, next) => {
+    try {
+        var data = await repository.getBankStatement(req.params.id);
+        res.status(200).send(data);
+    } catch (e) {
+        res.status(500).send({
+            message: 'Erro ao buscar extrato!'
+        });
+    }
+}
+
 exports.postTransfer = async (req, res, next) => {
 
     let contract = new validationContract();

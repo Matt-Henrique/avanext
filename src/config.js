@@ -1,5 +1,7 @@
-global.SALT_KEY = 'IOeAH09XqueJQ3YA-R6jM7-kTMYArlzPVCLL5FvO';
+require('dotenv').config();
+
+global.SALT_KEY = process.env.SALT_KEY;
 
 module.exports = {
-    connectionString: 'mongodb+srv://mateus:avswM40mIgyR7tyQ@cluster0-om7hh.azure.mongodb.net/test?retryWrites=true&w=majority',
+    connectionString: process.env.CONNECTION_STRING
 };

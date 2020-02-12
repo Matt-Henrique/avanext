@@ -12,6 +12,11 @@ exports.getById = async(id) => {
     return res;
 }
 
+exports.getBankStatement = async(id) => {
+    // TODO: Obter extrato por datas
+    return null;
+}
+
 exports.create = async(data) => {
     const transaction = new transactionDb(data);
     await transaction.save();
