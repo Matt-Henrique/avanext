@@ -26,8 +26,6 @@ exports.transfer = async (body) => {
             };
         }
 
-        console.log(new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
-
         const transactionExit = {
             transactionDate: new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }),
             transferValue: body.transferValue * -1,
