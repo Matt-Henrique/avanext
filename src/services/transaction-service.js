@@ -26,8 +26,10 @@ exports.transfer = async (body) => {
             };
         }
 
+        console.log(new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
+
         const transactionExit = {
-            transactionDate: new Date().toLocaleString(),
+            transactionDate: new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }),
             transferValue: body.transferValue * -1,
             bankCode: body.bankCode,
             agency: body.agency,
@@ -47,7 +49,7 @@ exports.transfer = async (body) => {
         if (body.bankCode == 100) {
 
             const transactionInput = {
-                transactionDate: new Date().toLocaleString(),
+                transactionDate: new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }),
                 transferValue: Number(body.transferValue),
                 bankCode: 100,
                 agency: userExit.agency, // Verificar erro
@@ -86,11 +88,9 @@ exports.getBankStatement = async (userId, initialDate, finalDate) => {
     try {
         let bankStatement = await repository.getBankStatementByUserId(userId, initialDate, finalDate);
 
-        console.log(bankStatement);
-        
         return {
             success: true,
-            message: "Extrato consultado!"
+            message: bankStatement
         };
     } catch (e) {
         return {

@@ -29,7 +29,8 @@ exports.getBankStatement = async (req, res, next) => {
     let contract = new validationContract();
 
     const initialDate = new Date(req.params.initialDate.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
-    const finalDate = new Date(req.params.finalDate.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+    let finalDate = new Date(req.params.finalDate.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+    finalDate.setHours(23, 59, 59, 999);
 
     contract.isDate(initialDate, 'A data inicial está inválida.');
     contract.isDate(finalDate, 'A data final está inválida.');
@@ -42,7 +43,7 @@ exports.getBankStatement = async (req, res, next) => {
         return res.status(400).send('A data inicial não pode ser maior que a data final.').end();
     }
 
-    let result = await transactionService.getBankStatement(req.params.userId, req.params.initialDate, req.params.finalDate);
+    let result = await transactionService.getBankStatement(req.params.userId, initialDate, finalDate);
 
     if (result.success) {
         return res.status(200).send(result.message).end();

@@ -15,7 +15,7 @@ exports.getById = async(id) => {
 exports.getBankStatementByUserId = async(userId, initialDate, finalDate) => {
     const res = await transactionDb.find(
         {
-            //userId: userId,
+            userId: userId,
             transactionDate: {"$gte": initialDate, "$lt": finalDate} 
         }
     );
