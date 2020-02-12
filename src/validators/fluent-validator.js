@@ -25,13 +25,18 @@ ValidationContract.prototype.isFixedLen = (value, len, message) => {
 }
 
 ValidationContract.prototype.positiveValue = (value, message) => {
-    if(value <= 0)
-    errors.push({ message: message });
+    if (value <= 0)
+        errors.push({ message: message });
 }
 
 ValidationContract.prototype.isEmail = (value, message) => {
     var reg = new RegExp(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/);
     if (!reg.test(value))
+        errors.push({ message: message });
+}
+
+ValidationContract.prototype.isDate = (value, message) => {
+    if (!isValidDate(value))
         errors.push({ message: message });
 }
 
@@ -45,6 +50,10 @@ ValidationContract.prototype.clear = () => {
 
 ValidationContract.prototype.isValid = () => {
     return errors.length == 0;
+}
+
+function isValidDate(date) {
+    return date instanceof Date && !isNaN(date);
 }
 
 module.exports = ValidationContract;

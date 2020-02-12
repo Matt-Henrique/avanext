@@ -12,9 +12,14 @@ exports.getById = async(id) => {
     return res;
 }
 
-exports.getBankStatement = async(id) => {
-    // TODO: Obter extrato por datas
-    return null;
+exports.getBankStatementByUserId = async(userId, initialDate, finalDate) => {
+    const res = await transactionDb.find(
+        {
+            //userId: userId,
+            transactionDate: {"$gte": initialDate, "$lt": finalDate} 
+        }
+    );
+    return res;
 }
 
 exports.create = async(data) => {

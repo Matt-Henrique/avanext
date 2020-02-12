@@ -25,13 +25,30 @@ exports.getById = async (req, res, next) => {
 }
 
 exports.getBankStatement = async (req, res, next) => {
-    try {
-        var data = await repository.getBankStatement(req.params.id);
-        res.status(200).send(data);
-    } catch (e) {
-        res.status(500).send({
-            message: 'Erro ao buscar extrato!'
-        });
+
+    let contract = new validationContract();
+
+    const initialDate = new Date(req.params.initialDate.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+    const finalDate = new Date(req.params.finalDate.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+
+    contract.isDate(initialDate, 'A data inicial está inválida.');
+    contract.isDate(finalDate, 'A data final está inválida.');
+
+    if (!contract.isValid()) {
+        res.status(400).send(contract.errors()).end();
+        return;
+    }
+    if (initialDate > finalDate) {
+        return res.status(400).send('A data inicial não pode ser maior que a data final.').end();
+    }
+
+    let result = await transactionService.getBankStatement(req.params.userId, req.params.initialDate, req.params.finalDate);
+
+    if (result.success) {
+        return res.status(200).send(result.message).end();
+    }
+    else {
+        return res.status(400).send(result.message).end();
     }
 }
 

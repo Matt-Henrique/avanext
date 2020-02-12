@@ -5,7 +5,7 @@ const authService = require('../services/auth-service');
 
 router.get('/', controller.get);
 router.get('/:id', controller.getById);
-router.get('/bankStatement/:id', controller.getBankStatement);
+router.get('/bankStatement/:userId&:initialDate&:finalDate', authService.authorize, controller.getBankStatement);
 router.post('/transfer/', controller.postTransfer);
 
 module.exports = router;

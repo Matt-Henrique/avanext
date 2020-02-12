@@ -1,9 +1,7 @@
-const validationContract = require('../validators/fluent-validator');
 const repository = require('../repositories/transaction-repository');
 const userRepository = require('../repositories/user-repository');
 
 exports.transfer = async (body) => {
-
     try {
         let userExit = await userRepository.getById(body.userId);
         
@@ -76,6 +74,24 @@ exports.transfer = async (body) => {
         };
 
 
+    } catch (e) {
+        return {
+            success: false,
+            message: "ERROR: " + e.message
+        };
+    }
+}
+
+exports.getBankStatement = async (userId, initialDate, finalDate) => {
+    try {
+        let bankStatement = await repository.getBankStatementByUserId(userId, initialDate, finalDate);
+
+        console.log(bankStatement);
+        
+        return {
+            success: true,
+            message: "Extrato consultado!"
+        };
     } catch (e) {
         return {
             success: false,
