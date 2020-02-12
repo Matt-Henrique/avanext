@@ -1,20 +1,33 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Aplicação back-end
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+Linguagem: NodeJS
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Banco de dados: MongoDB
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Dependências do projeto
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+Mongoose: é uma biblioteca para modelar os dados da aplicação (ODM) com MongoDB;
+
+Express: é um framework web que proporciona métodos utilitários HTTP para a criação de uma API;
+
+Body-parser: responsável por interpretar todas as requisições que venham com dados em JSON;
+
+JSON Web Tokens: é uma forma de garantir a autenticação e autorização de uso de APIs RESTful. 
+Quando um usuário se autentica, o servidor gera um token com data de expiração para ser enviado no cabeçalho das requisições;
+
+MD5: é um algoritmo de hash de 128 bits unidirecional, usado por softwares com protocolo ponto-a-ponto (P2P). 
+Por ser um algoritmo unidirecional, um hash MD5 não pode ser transformado novamente na senha que lhe deu origem.
+
+Estrutura do projeto:
+
+bin
+├── server.js
+src
+├── controllers
+├── models
+├── repositories
+├── routes
+├── services
+└── validators
+app.js
+config.js
