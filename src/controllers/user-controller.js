@@ -25,6 +25,27 @@ exports.getById = async(req, res, next) => {
     }
 }
 
+exports.hasCPF = async(req, res, next) => {
+    try {
+        const user = await repository.getByCPF(req.params.cpf);
+
+        if (user) {
+            res.status(200).send({
+                message: 'CPF já cadastrado'
+            });
+        }
+        else {
+            res.status(404).send({
+                message: 'CPF não cadastrado'
+            });
+        }
+    } catch (e) {
+        res.status(500).send({
+            message: 'Erro ao autenticar o usuário'
+        });
+    }
+};
+
 exports.getByAccountNumber = async(req, res, next) => {
     try {
         var data = await repository.getByAccountNumber(req.params.accountNumber);
