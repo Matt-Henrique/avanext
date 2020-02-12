@@ -6,7 +6,7 @@ const authService = require('../services/auth-service');
 router.get('/', authService.authorize, controller.get);
 router.get('/:id', authService.authorize, controller.getById);
 router.get('/accountNumber/:accountNumber', authService.authorize, controller.getByAccountNumber);
-router.get('/cpf/:cpf', authService.authorize, controller.hasCPF);
+router.get('/cpf/:cpf', controller.hasCPF);
 router.post('/authenticate', controller.authenticate);
 router.post('/', controller.post);
 router.patch('/bankBalance/:id', authService.authorize, controller.updateBankBalance);
