@@ -18,7 +18,7 @@ exports.getByCPF = async(cpf) => {
     const res = await User
         .findOne({
             cpf: cpf
-        }, '_id name cpf agency accountNumber bankBalance email');
+        }, '_id name cpf agency accountNumber bankBalance email active');
     return res;
 }
 

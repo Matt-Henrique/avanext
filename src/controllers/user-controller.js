@@ -31,16 +31,20 @@ exports.hasCPF = async(req, res, next) => {
 
         if (user) {
             res.status(200).send({
+                status: true,
+                active: user.active,
                 message: 'CPF já cadastrado'
             });
         }
         else {
             res.status(404).send({
+                status: false,
                 message: 'CPF não cadastrado'
             });
         }
     } catch (e) {
         res.status(500).send({
+            status: false,
             message: 'Erro ao autenticar o usuário'
         });
     }
