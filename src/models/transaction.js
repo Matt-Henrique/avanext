@@ -22,12 +22,15 @@ const schema = new Schema({
         type: String,
         required: true
     },
-    // 0 = Conta Corrente
-    // 1 = Conta Poupança
-    accountType: {
+    // 0 = TED
+    // 1 = DOC
+    transferType: {
         type: Number,
         default: 0,
         enum: [0, 1]
+    },
+    description: {
+        type: String
     },
     userName: {
         type: String

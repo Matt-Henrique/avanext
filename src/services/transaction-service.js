@@ -32,6 +32,8 @@ exports.transfer = async (body) => {
             bankCode: body.bankCode,
             agency: body.agency,
             accountNumber: body.accountNumber,
+            transferType: body.transferType,
+            description: body.description,
             userName: body.userName,
             cpf: body.cpf,
             userId: body.userId
@@ -52,6 +54,8 @@ exports.transfer = async (body) => {
                 bankCode: 100,
                 agency: userExit.agency, // Verificar erro
                 accountNumber: userExit.accountNumber,
+                transferType: body.transferType,
+                description: body.description,
                 userName: userExit.name,
                 cpf: userExit.cpf,
                 userId: userInput._id.toString()
