@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const express = require('express');
 const config = require('./config');
+const cors = require('cors');
 
 const app = express();
 const router = express.Router();
@@ -26,11 +27,12 @@ app.use(bodyParser.urlencoded({
 // Habilita o CORS
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-access-token');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     next();
 });
+
+app.options('*', cors());
 
 app.use('/', indexRoute);
 app.use('/users', userRoute);
