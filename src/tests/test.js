@@ -1,5 +1,8 @@
-var expect  = require('chai').expect;
-var request = require('request');
+const expect  = require('chai').expect;
+const request = require('request');
+
+let token;
+let userId;
 
 describe('User', function() {
 
@@ -37,6 +40,8 @@ describe('User', function() {
                 }
             }, (error, response, body) => {
                 expect(response.statusCode).to.equal(201);
+                token = response.body.token;
+                userId = response.body.data.id;
                 done();
             });
         });
@@ -71,6 +76,34 @@ describe('User', function() {
                     });
                 }
             });
+        });
+    });
+});
+
+describe('Transaction', function() {
+    
+    describe('Transfer', function() {
+
+        it('Transfer created', function(done) {
+            request.post('https://avanext.herokuapp.com/transactions/transfer', {
+                'headers': {
+                    'x-access-token': token
+                },
+                json: {
+                    "accountNumber": "00000001",
+                    "bankCode": "100",
+                    "transferValue": 1,
+                    "agency":"0001",
+                    "userName": "Mateus",
+                    "cpf": "12345678901",
+                    "transferType": 0,
+                    "description": "Teste unitário",
+                    "userId": userId
+                }
+            }, (error, response, body) => {
+                expect(response.statusCode).to.equal(201);
+                done();
+            }); 
         });
     });
 });

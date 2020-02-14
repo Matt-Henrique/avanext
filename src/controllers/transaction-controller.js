@@ -71,7 +71,7 @@ exports.postTransfer = async (req, res, next) => {
     let result = await transactionService.transfer(req.body);
 
     if (result.success) {
-        return res.status(200).send(result.message).end();
+        return res.status(201).send(result.message).end();
     }
     else {
         return res.status(400).send(result.message).end();
