@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha ./src/tests --exit",
     "start": "node ./bin/server.js",
+    "start:debug": "node --inspect ./bin/server.js",
     "start:dev": "nodemon ./bin/server.js"
   },
   "keywords": [],
