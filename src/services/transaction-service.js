@@ -8,7 +8,7 @@ exports.transfer = async (body) => {
         if (userExit === undefined || userExit === "" || userExit === null) {
             return {
                 success: false,
-                message: 'Usuário não encontrato!'
+                message: 'Usuário não encontrado!'
             };
         } else if (userExit.accountNumber === body.accountNumber) {
             return {
@@ -44,7 +44,7 @@ exports.transfer = async (body) => {
 
         // Atualizar saldo
         const uptadeValueExit = transactionExit.transferValue + userExit.bankBalance;
-        userRepository.updateBankBalance(transactionExit.userId, uptadeValueExit);
+        await userRepository.updateBankBalance(transactionExit.userId, uptadeValueExit);
 
         if (body.bankCode == 100) {
 
@@ -66,7 +66,7 @@ exports.transfer = async (body) => {
             
             // Atualizar saldo
             const uptadeValueInput = transactionInput.transferValue + userInput.bankBalance;
-            userRepository.updateBankBalance(transactionInput.userId, uptadeValueInput);
+            await userRepository.updateBankBalance(transactionInput.userId, uptadeValueInput);
 
         } else {
             //TODO: Chamar API Banco Central

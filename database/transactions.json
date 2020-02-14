@@ -1,5 +1,22 @@
 [
     {
-        
+        "bankCode": "100",
+        "agency": "0001",
+        "accountNumber": "00000002",
+        "userName": "Mateus",
+        "cpf": "12345678902",
+        "description": "Seed",
+        "transferType": 1,
+        "transferValue": 20
+    },
+    {
+        "bankCode": "100",
+        "agency": "0001",
+        "accountNumber": "00000003",
+        "userName": "Mateus",
+        "cpf": "12345678903",
+        "description": "Seed",
+        "transferType": 0,
+        "transferValue": 30
     }
 ]
