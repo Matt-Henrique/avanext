@@ -9,9 +9,16 @@ exports.get = async() => {
 }
 
 exports.getById = async(id) => {
-    const res = await User
-        .findById(id, 'name cpf agency accountNumber bankBalance email active');
-    return res;
+    try {
+        if (id.length !== 24) {
+            return null;
+        }
+        const res = await User
+            .findById(id, 'name cpf agency accountNumber bankBalance email active');
+        return res;
+    } catch (e) {
+        return null;
+    }
 }
 
 exports.getByCPF = async(cpf) => {

@@ -16,8 +16,15 @@ exports.get = async(req, res, next) => {
 
 exports.getById = async(req, res, next) => {
     try {
-        var data = await repository.getById(req.params.id);
-        res.status(200).send(data);
+        const user = await repository.getById(req.params.id);
+        if (user) {
+            res.status(200).send(user);
+        }
+        else {
+            res.status(404).send({
+                message: 'Usuário não encontrado'
+            });
+        }
     } catch (e) {
         res.status(500).send({
             message: 'Erro ao buscar usuário'
@@ -28,23 +35,19 @@ exports.getById = async(req, res, next) => {
 exports.hasCPF = async(req, res, next) => {
     try {
         const user = await repository.getByCPF(req.params.cpf);
-
         if (user) {
             res.status(200).send({
-                status: true,
                 active: user.active,
                 message: 'CPF já cadastrado'
             });
         }
         else {
             res.status(404).send({
-                status: false,
                 message: 'CPF não cadastrado'
             });
         }
     } catch (e) {
         res.status(500).send({
-            status: false,
             message: 'Erro ao autenticar o usuário'
         });
     }
@@ -52,8 +55,15 @@ exports.hasCPF = async(req, res, next) => {
 
 exports.getByAccountNumber = async(req, res, next) => {
     try {
-        var data = await repository.getByAccountNumber(req.params.accountNumber);
-        res.status(200).send(data);
+        const user = await repository.getByAccountNumber(req.params.accountNumber);
+        if (user) {
+            res.status(200).send(user);
+        }
+        else {
+            res.status(404).send({
+                message: 'Conta não encontrada'
+            });
+        }
     } catch (e) {
         res.status(500).send({
             message: 'Erro ao buscar usuário'
